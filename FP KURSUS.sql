@@ -43,7 +43,8 @@ create table paket_kursus(
 create table detil_kursus(
 	id_pk char(5) not null,
 	no_siswa char(5) not null,
-	status_tes varchar(10)
+	status_tes varchar(10),
+ 	nilai_tes integer
 );
 
 alter table detil_kursus
