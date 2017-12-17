@@ -67,15 +67,14 @@ alter table paket_kursus
 add constraint fk_id_cabang
 foreign key (id_cabang) references cabang(id_cabang);
 
-
 /*TRANSKRIP*/
 --no. 1--
-SELECT no_siswa, s_nama, s_alamat, s_telp
+SELECT no_siswa as "ID" , s_nama as "Nama", s_alamat as "Alamat", s_telp as "Telepon"
 FROM siswa s
 WHERE s.no_siswa ='S0002';
 
 --no. 2--
-SELECT pk.PK_TGLMULAI,CB.lokasi_cabang ,l.lv_nama,pj.P_NAMA,pk.PK_NAMA
+SELECT pk.PK_TGLMULAI as "Tgl Mulai",CB.lokasi_cabang AS "Cabang Kursus",l.lv_nama as "Level",pj.P_NAMA as "Pengajar",pk.PK_NAMA as "Nama Kursus"
 FROM cabang cb, paket_kursus pk, pengajar pj, detil_kursus dk, LEVEL_TABLE l, siswa s
 WHERE cb.ID_CABANG=pk.ID_CABANG
 AND l.LV_ID=pk.LV_ID
@@ -86,7 +85,7 @@ AND s.NO_SISWA = 'S0002'
 AND dk.STATUS_TES IS NULL;
 
 --no. 3--
-SELECT pk.pk_tglselesai, CB.lokasi_cabang, l.lv_nama, pk.pk_nama, dk.nilai_tes, dk.status_tes
+SELECT pk.pk_tglselesai as "Tgl Selesai", CB.lokasi_cabang AS "Cabang Kursus", l.lv_nama AS "Level", pk.pk_nama AS "Nama Kursus", dk.nilai_tes as "Nilai", dk.status_tes as "Status"
 FROM cabang cb, paket_kursus pk, pengajar pj, detil_kursus dk, LEVEL_TABLE l, siswa s
 WHERE cb.ID_CABANG=pk.ID_CABANG
 AND l.LV_ID=pk.LV_ID
@@ -98,30 +97,31 @@ AND dk.status_tes IS NOT NULL;
 
 /*LAPORAN*/
 --no. 1--
-select l.lv_nama, AVG(dk.nilai_tes)
+select l.lv_nama, AVG(dk.nilai_tes) as "RATA-RATA"
 from detil_kursus dk, paket_kursus pk, level_table l, cabang cb
 where dk.id_pk= pk.id_pk
 and pk.lv_id = l.lv_id
 and pk.id_cabang = cb.id_cabang
 and cb.lokasi_cabang = 'Kertajaya'
-group by l.lv_nama;
+group by l.lv_nama
+order by l.lv_nama;
 
 --no.2--
-SELECT pk.pk_nama, COUNT(pk.pk_nama)
+SELECT pk.pk_nama, COUNT(pk.pk_nama) as "JUMLAH SISWA"
 FROM detil_kursus dk, paket_kursus pk
 WHERE dk.id_pk = pk.id_pk
 GROUP BY pk.pk_nama
 ORDER BY COUNT(pk.pk_nama) DESC;
 
 --no3--
-SELECT pj.p_nama, pk.pk_nama, AVG(dk.nilai_tes), pk.pk_tglmulai, pk.pk_tglselesai
+SELECT pj.p_nama as "Pengajar", pk.pk_nama "Nama Kursus", AVG(dk.nilai_tes) as "Rata-Rata Nilai Kelas", pk.pk_tglmulai as "Tgl Mulai Kursus", pk.pk_tglselesai as "Tgl Selesai Kursus"
 FROM pengajar pj, paket_kursus pk, detil_kursus dk, level_table lv, cabang cb
 WHERE pj.id_pengajar = pk.id_pengajar
-      AND pk.lv_id = lv.lv_id
-      AND dk.id_pk = pk.id_pk
-      AND pk.id_cabang = cb.id_cabang
-      AND pk.id_cabang = 'CB002'
-      AND dk.status_tes IS NOT NULL
+AND pk.lv_id = lv.lv_id
+AND dk.id_pk = pk.id_pk
+AND pk.id_cabang = cb.id_cabang
+AND pk.id_cabang = 'CB002'
+AND dk.status_tes IS NOT NULL
 GROUP BY pj.p_nama, pk.pk_nama, pk.pk_tglmulai, pk.pk_tglselesai
 ORDER BY AVG(dk.nilai_tes)
 DESC;
