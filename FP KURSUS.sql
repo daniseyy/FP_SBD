@@ -75,31 +75,36 @@ FROM siswa s
 WHERE s.s_nama ='Shafira';
 
 --no. 2--
-SELECT pk.PK_TGLMULAI,c.LOKASI_CABANG ,l.lv_nama,pj.P_NAMA,pk.PK_NAMA
-FROM cabang c, paket_kursus pk, pengajar pj, detil_kursus dk, LEVEL_TABLE l, siswa s
-WHERE c.ID_CABANG=pk.ID_CABANG
+SELECT pk.PK_TGLMULAI,CB.lokasi_cabang ,l.lv_nama,pj.P_NAMA,pk.PK_NAMA
+FROM cabang cb, paket_kursus pk, pengajar pj, detil_kursus dk, LEVEL_TABLE l, siswa s
+WHERE cb.ID_CABANG=pk.ID_CABANG
 AND l.LV_ID=pk.LV_ID
 AND pj.ID_PENGAJAR=pk.ID_PENGAJAR 
 AND dk.ID_PK=pk.ID_PK
 AND s.NO_SISWA = dk.NO_SISWA
 AND s.NO_SISWA = 'S0002'
-AND dk.STATUS_TES = 'BELUM ADA';
+AND dk.STATUS_TES IS NULL;
 
 --no. 3--
-SELECT pk.pk_tglselesai, c.lokasi_cabang, l.lv_nama, pk.pk_nama, dk.nilai_tes, dk.status_tes
-FROM cabang c, paket_kursus pk, pengajar pj, detil_kursus dk, LEVEL_TABLE l, siswa s
-WHERE c.ID_CABANG=pk.ID_CABANG
+SELECT pk.pk_tglselesai, CB.lokasi_cabang, l.lv_nama, pk.pk_nama, dk.nilai_tes, dk.status_tes
+FROM cabang cb, paket_kursus pk, pengajar pj, detil_kursus dk, LEVEL_TABLE l, siswa s
+WHERE cb.ID_CABANG=pk.ID_CABANG
 AND l.LV_ID=pk.LV_ID
 AND pj.ID_PENGAJAR=pk.ID_PENGAJAR 
 AND dk.ID_PK=pk.ID_PK
 AND s.NO_SISWA = dk.NO_SISWA
 AND s.no_siswa = 'S0002'
-AND dk.status_tes not in ( SELECT dk.status_tes
-						   FROM detil_kursus dk
-						   WHERE dk.status_tes = 'BELUM ADA');
+AND dk.status_tes IS NOT NULL;
 
 /*LAPORAN*/
 --no. 1--
+select l.lv_nama, AVG(dk.nilai_tes)
+from detil_kursus dk, paket_kursus pk, level_table l, cabang cb
+where dk.id_pk= pk.id_pk
+and pk.lv_id = l.lv_id
+and pk.id_cabang = cb.id_cabang
+and cb.lokasi_cabang = 'Kertajaya'
+group by l.lv_nama;
 
 --no.2--
 SELECT pk.pk_nama, COUNT(pk.pk_nama)
@@ -114,7 +119,7 @@ FROM pengajar pj, paket_kursus pk, detil_kursus dk, level_table lv
 WHERE pj.id_pengajar = pk.id_pengajar
       AND pk.lv_id = lv.lv_id
       AND dk.id_pk = pk.id_pk
-      AND dk.status_tes IS NULL
+      AND dk.status_tes IS NOT NULL
 GROUP BY pj.p_nama, pk.pk_nama, pk.pk_tglmulai, pk.pk_tglselesai
 ORDER BY AVG(dk.nilai_tes) 
 DESC;
