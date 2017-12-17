@@ -67,7 +67,36 @@ alter table paket_kursus
 add constraint fk_id_cabang
 foreign key (id_cabang) references cabang(id_cabang);
 
+
+/*TRANSKRIP*/
 --no. 1--
 SELECT no_siswa, s_nama, s_alamat, s_telp
 FROM siswa s
 WHERE s.s_nama ='Shafira';
+
+--no. 2--
+SELECT pk.PK_TGLMULAI,c.LOKASI_CABANG ,l.lv_nama,pj.P_NAMA,pk.PK_NAMA
+FROM cabang c, paket_kursus pk, pengajar pj, detil_kursus dk, LEVEL_TABLE l, siswa s
+WHERE c.ID_CABANG=pk.ID_CABANG
+AND l.LV_ID=pk.LV_ID
+AND pj.ID_PENGAJAR=pk.ID_PENGAJAR 
+AND dk.ID_PK=pk.ID_PK
+AND s.NO_SISWA = dk.NO_SISWA
+AND s.NO_SISWA = 'S0002'
+AND dk.STATUS_TES = 'BELUM ADA';
+
+--no. 3--
+SELECT pk.pk_tglselesai, c.lokasi_cabang, l.lv_nama, pk.pk_nama, dk.nilai_tes, dk.status_tes
+FROM cabang c, paket_kursus pk, pengajar pj, detil_kursus dk, LEVEL_TABLE l, siswa s
+WHERE c.ID_CABANG=pk.ID_CABANG
+AND l.LV_ID=pk.LV_ID
+AND pj.ID_PENGAJAR=pk.ID_PENGAJAR 
+AND dk.ID_PK=pk.ID_PK
+AND s.NO_SISWA = dk.NO_SISWA
+AND s.no_siswa = 'S0002'
+AND dk.status_tes not in ( SELECT dk.status_tes
+						   FROM detil_kursus dk
+						   WHERE dk.status_tes = 'BELUM ADA');
+
+/*LAPORAN*/
+--no. 1--
