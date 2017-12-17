@@ -100,3 +100,21 @@ AND dk.status_tes not in ( SELECT dk.status_tes
 
 /*LAPORAN*/
 --no. 1--
+
+--no.2--
+SELECT pk.pk_nama, COUNT(pk.pk_nama)
+FROM detil_kursus dk, paket_kursus pk
+WHERE dk.id_pk = pk.id_pk
+GROUP BY pk.pk_nama
+ORDER BY COUNT(pk.pk_nama) DESC;
+
+--no3--
+SELECT pj.p_nama, pk.pk_nama, AVG(dk.nilai_tes), pk.pk_tglmulai, pk.pk_tglselesai
+FROM pengajar pj, paket_kursus pk, detil_kursus dk, level_table lv
+WHERE pj.id_pengajar = pk.id_pengajar
+      AND pk.lv_id = lv.lv_id
+      AND dk.id_pk = pk.id_pk
+      AND dk.status_tes IS NULL
+GROUP BY pj.p_nama, pk.pk_nama, pk.pk_tglmulai, pk.pk_tglselesai
+ORDER BY AVG(dk.nilai_tes) 
+DESC;
