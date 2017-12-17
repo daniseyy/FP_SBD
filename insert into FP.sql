@@ -1048,7 +1048,7 @@ INSERT INTO paket_kursus VALUES ('PK012','LV002','P0008','CB001','Conversation M
 INSERT INTO paket_kursus VALUES ('PK013','LV001','P0006','CB001','Conversation Basic','Kelas ini diperuntukkan bagi siswa yang ingin mendalami conversation secara basic','1150000',to_date('01-08-2017','dd-mm-yyyy'),to_date('01-09-2017','dd-mm-yyyy'));
 INSERT INTO paket_kursus VALUES ('PK014','LV001','P0009','CB001','Writing Basic','Kelas ini diperuntukkan bagi siswa yang ingin mempelajari writing pada level dasar','1200000',to_date('01-08-2017','dd-mm-yyyy'),to_date('01-09-2017','dd-mm-yyyy'));
 INSERT INTO paket_kursus VALUES ('PK015','LV001','P0014','CB001','Writing Basic','Kelas ini diperuntukkan bagi siswa yang ingin mempelajari writing pada level dasar','1200000',to_date('10-12-2017','dd-mm-yyyy'),to_date('10-01-2018','dd-mm-yyyy'));
-INSERT INTO paket_kursus VALUES ('PK016','LV002','P0011','CB002','Class Mediate','Kelas ini diperuntukkan bagi siswa yang ingin mempelajari writing pada level dasar','1200000',to_date('09-11-2017','dd-mm-yyyy'),to_date('09-12-2017','dd-mm-yyyy'));
+INSERT INTO paket_kursus VALUES ('PK016','LV002','P0011','CB003','Class Mediate','Kelas ini diperuntukkan bagi siswa yang ingin mempelajari writing pada level dasar','1200000',to_date('09-11-2017','dd-mm-yyyy'),to_date('09-12-2017','dd-mm-yyyy'));
 
 INSERT INTO detil_kursus VALUES ('PK001','S0001','LULUS',80);
 INSERT INTO detil_kursus VALUES ('PK003','S0003','LULUS',95);
@@ -1061,10 +1061,9 @@ INSERT INTO detil_kursus VALUES ('PK008','S0004','LULUS',99);
 INSERT INTO detil_kursus VALUES ('PK002','S0007','LULUS',92);
 INSERT INTO detil_kursus VALUES ('PK007','S0005','LULUS',85);
 INSERT INTO detil_kursus VALUES ('PK001','S0003','LULUS',93);
-
-INSERT INTO detil_kursus VALUES ('PK004','S0002','LULUS',87);
+INSERT INTO detil_kursus VALUES ('PK002','S0002','LULUS',87);
 INSERT INTO detil_kursus VALUES ('PK001','S0002','LULUS',100);
 INSERT INTO detil_kursus VALUES ('PK005','S0002','GAGAL',69);
-INSERT INTO detil_kursus VALUES ('PK004','S0002','GAGAL',67);
+INSERT INTO detil_kursus VALUES ('PK016','S0002','GAGAL',67);
 INSERT INTO detil_kursus VALUES ('PK015','S0002',NULL,NULL);
 INSERT INTO detil_kursus VALUES ('PK016','S0002',NULL,NULL);
