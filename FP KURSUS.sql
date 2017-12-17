@@ -72,7 +72,7 @@ foreign key (id_cabang) references cabang(id_cabang);
 --no. 1--
 SELECT no_siswa, s_nama, s_alamat, s_telp
 FROM siswa s
-WHERE s.s_nama ='Shafira';
+WHERE s.no_siswa ='S0002';
 
 --no. 2--
 SELECT pk.PK_TGLMULAI,CB.lokasi_cabang ,l.lv_nama,pj.P_NAMA,pk.PK_NAMA
@@ -115,11 +115,13 @@ ORDER BY COUNT(pk.pk_nama) DESC;
 
 --no3--
 SELECT pj.p_nama, pk.pk_nama, AVG(dk.nilai_tes), pk.pk_tglmulai, pk.pk_tglselesai
-FROM pengajar pj, paket_kursus pk, detil_kursus dk, level_table lv
+FROM pengajar pj, paket_kursus pk, detil_kursus dk, level_table lv, cabang cb
 WHERE pj.id_pengajar = pk.id_pengajar
       AND pk.lv_id = lv.lv_id
       AND dk.id_pk = pk.id_pk
+      AND pk.id_cabang = cb.id_cabang
+      AND pk.id_cabang = 'CB002'
       AND dk.status_tes IS NOT NULL
 GROUP BY pj.p_nama, pk.pk_nama, pk.pk_tglmulai, pk.pk_tglselesai
-ORDER BY AVG(dk.nilai_tes) 
+ORDER BY AVG(dk.nilai_tes)
 DESC;
