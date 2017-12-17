@@ -66,3 +66,8 @@ foreign key (id_pengajar) references pengajar(id_pengajar);
 alter table paket_kursus
 add constraint fk_id_cabang
 foreign key (id_cabang) references cabang(id_cabang);
+
+--no. 1--
+SELECT no_siswa, s_nama, s_alamat, s_telp
+FROM siswa s
+WHERE s.s_nama ='Shafira';
