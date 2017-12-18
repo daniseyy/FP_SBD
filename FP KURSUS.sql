@@ -125,3 +125,44 @@ AND dk.status_tes IS NOT NULL
 GROUP BY pj.p_nama, pk.pk_nama, pk.pk_tglmulai, pk.pk_tglselesai
 ORDER BY AVG(dk.nilai_tes)
 DESC;
+
+/*soal*/
+--no. 1--
+SELECT pk.pk_nama, COUNT(dk.status_tes)
+FROM DETIL_KURSUS dk, paket_kursus pk
+WHERE dk.id_pk = pk.id_pk
+AND dk.status_tes = 'LULUS'
+AND pk.pk_nama = 'Conversation Basic'
+GROUP BY pk.pk_nama;
+
+--no. 2--
+SELECT DISTINCT s.s_nama
+FROM siswa s, detil_kursus dk, paket_kursus pk, pengajar p, level_table lt
+WHERE s.no_siswa=dk.no_siswa
+	AND dk.id_pk=pk.id_pk
+	AND pk.id_pengajar=p.id_pengajar
+	AND pk.lv_id=lt.lv_id
+	AND s_nama <> 'Shafira'
+	AND p.id_pengajar IN ( SELECT id_pengajar
+							FROM paket_kursus
+							WHERE id_pk IN (SELECT id_pk
+											FROM detil_kursus
+											WHERE no_siswa IN ( SELECT no_siswa
+																FROM siswa
+																WHERE s_nama = 'Shafira')))
+                      
+--no.2--          
+SELECT DISTINCT cb.lokasi_cabang
+FROM cabang cb, siswa s, detil_kursus dk, paket_kursus pk, pengajar p, level_table lt
+WHERE s.no_siswa=dk.no_siswa
+	AND dk.id_pk=pk.id_pk
+	AND pk.id_pengajar=p.id_pengajar
+	AND pk.lv_id=lt.lv_id
+	AND lv_nama = 'Intermediate'
+  AND lt.lv_id IN ( SELECT lv_id
+							FROM paket_kursus
+							WHERE id_pk IN (SELECT id_pk
+											FROM paket_kursus
+											WHERE id_cabang IN ( SELECT COUNT(id_cabang)
+																FROM cabang
+																WHERE lokasi_cabang <> 'Rungkut')));
