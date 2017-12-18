@@ -104,7 +104,7 @@ and pk.lv_id = l.lv_id
 and pk.id_cabang = cb.id_cabang
 and cb.lokasi_cabang = 'Kertajaya'
 group by l.lv_nama
-order by l.lv_nama;
+order by avg(dk.nilai_tes) desc;
 
 --no.2--
 SELECT pk.pk_nama, COUNT(pk.pk_nama) as "JUMLAH SISWA"
